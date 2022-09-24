@@ -9,7 +9,7 @@ internal data class PokemonEntity(
     @PrimaryKey
     val id: Int,
     val name: String,
-    val type: List<String>,
+    val types: List<String>,
     val weight: Int,
     val height: Int,
     @ColumnInfo(name = "image_url")
