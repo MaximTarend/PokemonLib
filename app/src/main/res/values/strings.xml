@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PokemonLib</string>
+    <string name="list_toolbar_title">Pokemon list</string>
+    <string name="pokemon_details_title">Pokemon Profile</string>
+    <string name="pokemon_name">Pokemon name</string>
 </resources>
