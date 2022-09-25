@@ -4,6 +4,7 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import by.hometrainng.pokemonlib.koin.dataModule
+import by.hometrainng.pokemonlib.koin.viewModelModule
 
 
 class PokemonLib: Application() {
@@ -14,7 +15,8 @@ class PokemonLib: Application() {
         startKoin {
             androidContext(this@PokemonLib)
             modules(
-                dataModule
+                dataModule,
+                viewModelModule
             )
         }
     }

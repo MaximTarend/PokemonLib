@@ -22,6 +22,7 @@
         tools:listitem="@layout/list_item"
         tools:itemCount="20"
         android:padding="12dp"
+
         />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

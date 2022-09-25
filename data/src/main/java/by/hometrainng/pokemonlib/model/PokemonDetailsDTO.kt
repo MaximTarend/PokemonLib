@@ -2,7 +2,7 @@ package by.hometrainng.pokemonlib.model
 
 import com.google.gson.annotations.SerializedName
 
-internal data class PokemonDetailsDTO(
+data class PokemonDetailsDTO(
     val id: Int,
     val name: String,
     val types: List<Type>,
@@ -12,6 +12,6 @@ internal data class PokemonDetailsDTO(
     val imageURL: String
 )
 
-internal data class Type(
+data class Type(
     val name: String
 )

@@ -1,15 +1,15 @@
 package by.hometrainng.pokemonlib.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import by.hometrainng.pokemonlib.converter.TypeConverter
 
 @Entity
 internal data class PokemonEntity(
     @PrimaryKey
     val id: Int,
     val name: String,
-    val types: List<String>,
+//    @TypeConverters(TypeConverter::class)
+//    val types: List<String>,
     val weight: Int,
     val height: Int,
     @ColumnInfo(name = "image_url")

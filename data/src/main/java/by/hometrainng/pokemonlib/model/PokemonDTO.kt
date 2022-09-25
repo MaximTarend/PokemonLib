@@ -1,5 +1,6 @@
 package by.hometrainng.pokemonlib.model
 
-internal data class PokemonDTO(
+data class PokemonDTO(
+    val id: Int,
     val name: String
 )
