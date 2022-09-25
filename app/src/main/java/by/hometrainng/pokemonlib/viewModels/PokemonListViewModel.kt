@@ -11,6 +11,8 @@ class PokemonListViewModel(
     private val getPokemonsUseCase: GetPokemonsUseCase
 ): ViewModel() {
 
+    private var offset = 0
+
     private val loadFlow = MutableSharedFlow<Unit>(
         replay = 1,
         extraBufferCapacity = 0,
@@ -19,12 +21,16 @@ class PokemonListViewModel(
 
     val loadDataFlow = loadFlow
         .map {
-            getPokemonsUseCase(30, 30)
+            getPokemonsUseCase(offset, LIMIT)
                 .fold(
                     onSuccess = { it },
                     onFailure = { emptyList() }
                 )
         }
+        .onEach {
+            offset += OFFSET
+        }
+        .runningReduce { accumulator, value -> accumulator + value }
         .shareIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
@@ -37,5 +43,10 @@ class PokemonListViewModel(
 
     fun onLoadMore() {
         loadFlow.tryEmit(Unit)
+    }
+
+    companion object {
+        private const val OFFSET = 30
+        private const val LIMIT = 30
     }
 }

@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.hometrainng.pokemonlib.addPaginationScrollListener
+import by.hometrainng.pokemonlib.addSpaceDecoration
 import by.hometrainng.pokemonlib.databinding.FragmentPokemonListBinding
 import by.hometrainng.pokemonlib.listAdapter.PokemonListAdapter
 import by.hometrainng.pokemonlib.viewModels.PokemonListViewModel
@@ -41,9 +43,15 @@ class PokemonListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val layoutManager = LinearLayoutManager(view.context)
+
         with(binding) {
             recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(view.context)
+            recyclerView.layoutManager = layoutManager
+            recyclerView.addSpaceDecoration(SPACE)
+            recyclerView.addPaginationScrollListener(layoutManager, ITEMS_TO_LOAD) {
+                listViewModel.onLoadMore()
+            }
 
             listViewModel
                 .loadDataFlow
@@ -58,5 +66,10 @@ class PokemonListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val SPACE = 12
+        private const val ITEMS_TO_LOAD = 30
     }
 }
