@@ -12,7 +12,7 @@ import by.hometrainng.pokemonlib.addPaginationScrollListener
 import by.hometrainng.pokemonlib.addSpaceDecoration
 import by.hometrainng.pokemonlib.databinding.FragmentPokemonListBinding
 import by.hometrainng.pokemonlib.listAdapter.PokemonListAdapter
-import by.hometrainng.pokemonlib.viewModels.PokemonListViewModel
+import by.hometrainng.pokemonlib.viewModels.ListViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,7 +22,7 @@ class PokemonListFragment : Fragment() {
     private var _binding: FragmentPokemonListBinding? = null
     private val binding get() = requireNotNull(_binding)
 
-    private val listViewModel by viewModel<PokemonListViewModel>()
+    private val listViewModel by viewModel<ListViewModel>()
 
     private val adapter by lazy {
         PokemonListAdapter(requireContext()) { pokemon ->

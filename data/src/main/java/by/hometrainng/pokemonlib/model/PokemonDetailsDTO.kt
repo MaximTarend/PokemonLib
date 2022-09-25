@@ -8,10 +8,16 @@ data class PokemonDetailsDTO(
     val types: List<Type>,
     val weight: Int,
     val height: Int,
-    @SerializedName("sprites/front_default") // TODO проверить правильность доступа к параметру
-    val imageURL: String
-)
+    @SerializedName("sprites") // TODO проверить правильность доступа к параметру
+    val imageURL: Sprite
+) {
+    data class Type(
+        @SerializedName("name")
+        val typeName: String
+    )
+    data class Sprite(
+        @SerializedName("front_default")
+        val frontDefaultAvatarURL: String
+    )
+}
 
-data class Type(
-    val name: String
-)

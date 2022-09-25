@@ -2,12 +2,11 @@ package by.hometrainng.pokemonlib.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import by.hometrainng.pokemonlib.api.PokemonApi
 import by.hometrainng.pokemonlib.usecase.GetPokemonsUseCase
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 
-class PokemonListViewModel(
+class ListViewModel(
     private val getPokemonsUseCase: GetPokemonsUseCase
 ): ViewModel() {
 
