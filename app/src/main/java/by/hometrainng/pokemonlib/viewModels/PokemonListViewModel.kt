@@ -21,11 +21,19 @@ class PokemonListViewModel(
 
     val loadDataFlow = loadFlow
         .map {
-            pokemonApi.getPokemonList(30, 30)
+            pokemonApi.getPokemonList(30, 30).list
         }
         .shareIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
             replay = 1
         )
+
+    init {
+        onLoadMore()
+    }
+
+    fun onLoadMore() {
+        loadFlow.tryEmit(Unit)
+    }
 }

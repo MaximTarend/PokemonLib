@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.hometrainng.pokemonlib.databinding.FragmentPokemonListBinding
 import by.hometrainng.pokemonlib.listAdapter.PokemonListAdapter
 import by.hometrainng.pokemonlib.viewModels.PokemonListViewModel
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,7 +24,7 @@ class PokemonListFragment : Fragment() {
 
     private val adapter by lazy {
         PokemonListAdapter(requireContext()) { pokemon ->
-            findNavController().navigate(PokemonListFragmentDirections.toDetails(pokemon.id))
+            findNavController().navigate(PokemonListFragmentDirections.toDetails(pokemon.name))
         }
     }
 
@@ -47,7 +49,9 @@ class PokemonListFragment : Fragment() {
                 .loadDataFlow
                 .onEach {
                     adapter.submitList(it)
+                    println()
                 }
+                .launchIn(viewLifecycleOwner.lifecycleScope)
         }
     }
 

@@ -33,7 +33,7 @@ class PokemonListAdapter(
             }
 
             override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
-                return oldItem.name == newItem.name && oldItem.id == newItem.id
+                return oldItem.name == newItem.name
             }
 
         }

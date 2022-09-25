@@ -1,5 +1,6 @@
 package by.hometrainng.pokemonlib.api
 
+import by.hometrainng.pokemonlib.model.ApiListObject
 import by.hometrainng.pokemonlib.model.Pokemon
 import by.hometrainng.pokemonlib.model.PokemonDTO
 import by.hometrainng.pokemonlib.model.PokemonDetailsDTO
@@ -13,7 +14,7 @@ interface PokemonApi {
     suspend fun getPokemonList(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): List<Pokemon> // TODO исправить на DTO
+    ): ApiListObject // TODO исправить на DTO
 
     @GET("pokemon/{name}")
     suspend fun getPokemonDetails(
