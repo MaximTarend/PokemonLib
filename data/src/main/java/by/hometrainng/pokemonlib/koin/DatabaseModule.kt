@@ -4,7 +4,7 @@ import androidx.room.Room
 import by.hometrainng.pokemonlib.database.PokemonDatabase
 import org.koin.dsl.module
 
-internal val DatabaseModule = module {
+internal val databaseModule = module {
     single {
         Room.databaseBuilder(
             get(),
