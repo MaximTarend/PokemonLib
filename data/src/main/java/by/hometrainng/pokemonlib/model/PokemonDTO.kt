@@ -1,6 +1,9 @@
 package by.hometrainng.pokemonlib.model
 
+import com.google.gson.annotations.SerializedName
+
 data class PokemonDTO(
-    val id: Int,
-    val name: String
+    val count: Int,
+    @SerializedName("results")
+    val list: List<Pokemon>
 )

@@ -3,14 +3,12 @@ package by.hometrainng.pokemonlib.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.hometrainng.pokemonlib.api.PokemonApi
+import by.hometrainng.pokemonlib.usecase.GetPokemonsUseCase
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.*
 
 class PokemonListViewModel(
-    private val pokemonApi: PokemonApi
+    private val getPokemonsUseCase: GetPokemonsUseCase
 ): ViewModel() {
 
     private val loadFlow = MutableSharedFlow<Unit>(
@@ -21,7 +19,11 @@ class PokemonListViewModel(
 
     val loadDataFlow = loadFlow
         .map {
-            pokemonApi.getPokemonList(30, 30).list
+            getPokemonsUseCase(30, 30)
+                .fold(
+                    onSuccess = { it },
+                    onFailure = { emptyList() }
+                )
         }
         .shareIn(
             scope = viewModelScope,
