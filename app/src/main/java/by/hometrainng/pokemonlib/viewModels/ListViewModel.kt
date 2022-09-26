@@ -2,12 +2,20 @@ package by.hometrainng.pokemonlib.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import by.hometrainng.pokemonlib.model.PokemonDetails
+import by.hometrainng.pokemonlib.toListModel
+import by.hometrainng.pokemonlib.usecase.GetPokemonDetailsUseCase
+import by.hometrainng.pokemonlib.usecase.GetPokemonsFromDB
 import by.hometrainng.pokemonlib.usecase.GetPokemonsUseCase
+import by.hometrainng.pokemonlib.usecase.InsertPokemonsToBD
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 
 class ListViewModel(
-    private val getPokemonsUseCase: GetPokemonsUseCase
+    private val getPokemonsUseCase: GetPokemonsUseCase,
+    private val insertPokemonsToBD: InsertPokemonsToBD,
+    private val getPokemonsFromDB: GetPokemonsFromDB,
+    private val getPokemonDetailsUseCase: GetPokemonDetailsUseCase
 ): ViewModel() {
 
     private var offset = 0
@@ -27,9 +35,18 @@ class ListViewModel(
                 )
         }
         .onEach {
+            val listToDB = mutableListOf<PokemonDetails>()
+            it.onEach { pokemon ->
+                getPokemonDetailsUseCase(pokemon.name)
+                    .getOrNull()?.let { pokemonDetails -> listToDB.add(pokemonDetails) }
+            }
+            insertPokemonsToBD(listToDB)
             offset += OFFSET
         }
         .runningReduce { accumulator, value -> accumulator + value }
+        .onStart { emit(getPokemonsFromDB().map {
+            it.toListModel()
+        }) }
         .shareIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,

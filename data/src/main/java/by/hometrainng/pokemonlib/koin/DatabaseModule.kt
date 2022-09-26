@@ -12,7 +12,7 @@ internal val databaseModule = module {
             PokemonDatabase::class.java,
             "pokemon_database.db"
         )
-            .addTypeConverter(TypeConverter)
+//            .addTypeConverter(TypeConverter)
             .build()
     }
 

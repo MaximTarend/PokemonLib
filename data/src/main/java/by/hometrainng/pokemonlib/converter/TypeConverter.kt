@@ -1,16 +1,18 @@
 package by.hometrainng.pokemonlib.converter
 
+import androidx.room.ProvidedTypeConverter
 import java.util.*
 
+//@ProvidedTypeConverter
 class TypeConverter {
 
     @androidx.room.TypeConverter
-    public fun listToString(typesList: List<String>): String {
+    fun listToString(typesList: List<String>): String {
         return typesList.joinToString(SEPARATOR)
     }
 
     @androidx.room.TypeConverter
-    public fun stringToList(typesString: String): List<String> {
+    fun stringToList(typesString: String): List<String> {
         return typesString.split(SEPARATOR).toTypedArray().asList()
     }
 

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="by.hometrainng.pokemonlib">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:name="by.hometrainng.pokemonlib.PokemonLib"
         android:allowBackup="true"
