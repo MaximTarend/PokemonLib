@@ -3,7 +3,7 @@ package by.hometrainng.pokemonlib.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.hometrainng.pokemonlib.model.PokemonDetails
-import by.hometrainng.pokemonlib.toMainModel
+import by.hometrainng.pokemonlib.toPokemonModel
 import by.hometrainng.pokemonlib.usecase.GetPokemonDetailsUseCase
 import by.hometrainng.pokemonlib.usecase.GetPokemonsFromDB
 import by.hometrainng.pokemonlib.usecase.GetPokemonsUseCase
@@ -30,7 +30,7 @@ class ListViewModel(
         .map {
             getPokemonsUseCase(offset, LIMIT)
                 .fold(
-                    onSuccess = { it },
+                    onSuccess = { it }, // TODO реализовать подобие LCE для списка
                     onFailure = { emptyList() }
                 )
         }
@@ -44,8 +44,8 @@ class ListViewModel(
             offset += OFFSET
         }
         .runningReduce { accumulator, value -> accumulator + value }
-        .onStart { emit(getPokemonsFromDB().map {
-            it.toMainModel()
+        .onStart { emit(getPokemonsFromDB().map { pokemonDetails ->
+            pokemonDetails.toPokemonModel()
         }) }
         .shareIn(
             scope = viewModelScope,
