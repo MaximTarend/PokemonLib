@@ -8,16 +8,16 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.shareIn
 
 class DetailsViewModel(
-    private val name: String,
+    private val pokemonName: String,
     private val getPokemonDetailsUseCase: GetPokemonDetailsUseCase
 ): ViewModel() {
 
     val loadDetailsFlow = flow {
-        val pokemonDetails = getPokemonDetailsUseCase(name)
+        val pokemonDetails = getPokemonDetailsUseCase(pokemonName)
             .fold(
-            onSuccess = { it },
-            onFailure = { error("yo max it's failure") }
-        )
+                onSuccess = { it },
+                onFailure = { error("FAILURE") }
+            )
         emit(pokemonDetails)
     }.shareIn(
         scope = viewModelScope,

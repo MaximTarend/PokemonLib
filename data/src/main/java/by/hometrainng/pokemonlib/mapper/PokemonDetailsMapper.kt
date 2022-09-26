@@ -7,9 +7,7 @@ internal fun PokemonDetailsDTO.toDomainModel(): PokemonDetails {
     return PokemonDetails(
         id = id,
         name = name,
-        types = types.map {
-            it.typeName
-        },
+        types = types.map { it.type.name },
         weight = weight,
         height = height,
         imageURL = imageURL.frontDefaultAvatarURL

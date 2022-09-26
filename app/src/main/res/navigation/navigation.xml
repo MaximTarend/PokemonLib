@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_pokemon_details">
 
         <argument
-            android:name="pokemon_id"
+            android:name="pokemon_name"
             app:argType="string"/>
 
     </fragment>

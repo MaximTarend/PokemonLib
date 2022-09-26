@@ -26,33 +26,56 @@
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="350dp"
         android:adjustViewBounds="true"
         android:padding="12dp"
         tools:src="@tools:sample/avatars"/>
 
-    <TextView
-        android:id="@+id/description1"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:padding="10dp"
-        tools:text="description1" />
+        android:layout_height="match_parent">
 
-       <TextView
-        android:id="@+id/description2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:padding="10dp"
-        tools:text="description2" />
 
-       <TextView
-        android:id="@+id/description3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:padding="10dp"
-        tools:text="description3" />
+        <TextView
+            android:id="@+id/weight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_marginTop="140dp"
+            android:gravity="center"
+            tools:text="@string/weight_prefix"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/height"/>
+
+        <TextView
+            android:id="@+id/height"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_marginTop="140dp"
+            android:gravity="center"
+            tools:text="@string/height_prefix"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/weight"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/types"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:padding="10dp"
+            tools:text="Type1, Type2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/weight"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>
