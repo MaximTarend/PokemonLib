@@ -2,10 +2,12 @@ package by.hometrainng.pokemonlib.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import by.hometrainng.pokemonlib.model.LceState
 import by.hometrainng.pokemonlib.usecase.GetPokemonDetailsUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.stateIn
 
 class DetailsViewModel(
     private val pokemonName: String,
@@ -13,16 +15,16 @@ class DetailsViewModel(
 ): ViewModel() {
 
     val loadDetailsFlow = flow {
-        val pokemonDetails = getPokemonDetailsUseCase(pokemonName)
+        val pokemonDetailsState = getPokemonDetailsUseCase(pokemonName)
             .fold(
-                onSuccess = { it },
-                onFailure = { error("FAILURE") }
+                onSuccess = { LceState.Content(it) },
+                onFailure = { LceState.Error(it) }
             )
-        emit(pokemonDetails)
-    }.shareIn(
+        emit(pokemonDetailsState)
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
-        replay = 1
+        initialValue = LceState.Loading
     )
 
 }

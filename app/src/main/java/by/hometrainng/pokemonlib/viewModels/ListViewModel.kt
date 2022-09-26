@@ -3,7 +3,7 @@ package by.hometrainng.pokemonlib.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.hometrainng.pokemonlib.model.PokemonDetails
-import by.hometrainng.pokemonlib.toListModel
+import by.hometrainng.pokemonlib.toMainModel
 import by.hometrainng.pokemonlib.usecase.GetPokemonDetailsUseCase
 import by.hometrainng.pokemonlib.usecase.GetPokemonsFromDB
 import by.hometrainng.pokemonlib.usecase.GetPokemonsUseCase
@@ -45,7 +45,7 @@ class ListViewModel(
         }
         .runningReduce { accumulator, value -> accumulator + value }
         .onStart { emit(getPokemonsFromDB().map {
-            it.toListModel()
+            it.toMainModel()
         }) }
         .shareIn(
             scope = viewModelScope,
