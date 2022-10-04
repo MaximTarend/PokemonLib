@@ -49,7 +49,7 @@
             android:layout_height="@dimen/image_height"
             android:adjustViewBounds="true"
             tools:src="@tools:sample/avatars"
-            app:layout_constraintTop_toBottomOf="@id/pokemon_name"/>
+            app:layout_constraintTop_toBottomOf="@id/pokemon_name" />
 
         <TextView
             android:id="@+id/weight"
