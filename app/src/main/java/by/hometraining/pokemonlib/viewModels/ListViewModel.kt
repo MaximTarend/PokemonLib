@@ -4,10 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.hometraining.pokemonlib.model.PokemonDetails
 import by.hometraining.pokemonlib.toPokemonModel
-import by.hometraining.pokemonlib.usecase.GetPokemonDetailsUseCase
-import by.hometraining.pokemonlib.usecase.GetPokemonsFromDB
-import by.hometraining.pokemonlib.usecase.GetPokemonsUseCase
-import by.hometraining.pokemonlib.usecase.InsertPokemonsToDB
+import by.hometraining.pokemonlib.usecase.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 
@@ -15,7 +12,8 @@ class ListViewModel(
     private val getPokemonsUseCase: GetPokemonsUseCase,
     private val insertPokemonsToBD: InsertPokemonsToDB,
     private val getPokemonsFromDB: GetPokemonsFromDB,
-    private val getPokemonDetailsUseCase: GetPokemonDetailsUseCase
+    private val getPokemonDetailsUseCase: GetPokemonDetailsUseCase,
+    private val getAllPokemonsUseCase: GetAllPokemonsUseCase
 ) : ViewModel() {
 
     private var offset = 0
@@ -27,6 +25,16 @@ class ListViewModel(
     )
 
     val loadDataFlow = loadFlow
+        .map { getAllPokemonsUseCase(offset, LIMIT) }
+        .onEach { offset += OFFSET }
+        .runningReduce { accumulator, value -> accumulator + value }
+        .shareIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            replay = 1
+        )
+
+/*    val loadDataFlow = loadFlow
         .map {
             getPokemonsUseCase(offset, LIMIT)
                 .fold(
@@ -53,7 +61,7 @@ class ListViewModel(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
             replay = 1
-        )
+        )*/
 
     init {
         onLoadMore()

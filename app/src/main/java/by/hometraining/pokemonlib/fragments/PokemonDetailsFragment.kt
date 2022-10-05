@@ -48,7 +48,23 @@ class PokemonDetailsFragment : Fragment() {
         with(binding) {
             detailsToolbar.setupWithNavController(findNavController())
 
+            contentLayout.isVisible = true
+            progressCircular.isVisible = false
+
             detailsViewModel
+                .loadDetailsFlow
+                .onEach { pokemonDetails ->
+                    pokemonName.text = pokemonDetails.name
+                    image.load(pokemonDetails.imageURL)
+                    weight.text =
+                        "$WEIGHT_PREFIX ${pokemonDetails.weight * WEIGHT_K} $WEIGHT_POSTFIX"
+                    height.text =
+                        "$HEIGHT_PREFIX ${pokemonDetails.height * HEIGHT_K} $HEIGHT_POSTFIX"
+                    types.text =
+                        "$TYPE_PREFIX ${pokemonDetails.types.joinToString(SEPARATOR)}"
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+/*            detailsViewModel
                 .loadDetailsFlow
                 .onEach { pokemonDetailsState ->
                     contentLayout.isVisible = pokemonDetailsState is LceState.Content
@@ -70,7 +86,7 @@ class PokemonDetailsFragment : Fragment() {
                         }
                         LceState.Loading -> { }
                     }
-                }.launchIn(viewLifecycleOwner.lifecycleScope)
+                }.launchIn(viewLifecycleOwner.lifecycleScope)*/
         }
     }
 
