@@ -3,7 +3,7 @@ package by.hometraining.pokemonlib.usecase
 import by.hometraining.pokemonlib.model.PokemonDetails
 import by.hometraining.pokemonlib.repository.PokemonLocalRepository
 
-class InsertPokemonsToBD(
+class InsertPokemonsToDB(
     private val pokemonLocalRepository: PokemonLocalRepository
 ) {
     suspend operator fun invoke(pokemonList: List<PokemonDetails>) {

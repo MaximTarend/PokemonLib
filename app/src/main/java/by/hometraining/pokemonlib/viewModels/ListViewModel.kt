@@ -7,13 +7,13 @@ import by.hometraining.pokemonlib.toPokemonModel
 import by.hometraining.pokemonlib.usecase.GetPokemonDetailsUseCase
 import by.hometraining.pokemonlib.usecase.GetPokemonsFromDB
 import by.hometraining.pokemonlib.usecase.GetPokemonsUseCase
-import by.hometraining.pokemonlib.usecase.InsertPokemonsToBD
+import by.hometraining.pokemonlib.usecase.InsertPokemonsToDB
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 
 class ListViewModel(
     private val getPokemonsUseCase: GetPokemonsUseCase,
-    private val insertPokemonsToBD: InsertPokemonsToBD,
+    private val insertPokemonsToBD: InsertPokemonsToDB,
     private val getPokemonsFromDB: GetPokemonsFromDB,
     private val getPokemonDetailsUseCase: GetPokemonDetailsUseCase
 ) : ViewModel() {

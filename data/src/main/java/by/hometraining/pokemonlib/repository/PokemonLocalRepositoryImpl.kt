@@ -5,10 +5,9 @@ import by.hometraining.pokemonlib.mapper.toDomainModel
 import by.hometraining.pokemonlib.mapper.toPokemonEntity
 import by.hometraining.pokemonlib.model.PokemonDetails
 
-internal class PokemonLocalRepositoryImpl(
-    private val pokemonDao: PokemonDao
-) : PokemonLocalRepository {
-    override suspend fun getPokemonsFromBD(): List<PokemonDetails> {
+internal class PokemonLocalRepositoryImpl(private val pokemonDao: PokemonDao) : PokemonLocalRepository {
+
+    override suspend fun getPokemonsFromDB(): List<PokemonDetails> {
         return pokemonDao.getPokemons().map {
             it.toDomainModel()
         }

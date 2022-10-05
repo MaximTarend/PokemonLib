@@ -1,4 +1,4 @@
-package by.hometraining.pokemonlib.converter
+package by.hometraining.pokemonlib.database.converter
 
 //@ProvidedTypeConverter
 class TypeConverter {

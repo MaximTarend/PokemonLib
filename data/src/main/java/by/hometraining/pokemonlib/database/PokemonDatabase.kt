@@ -4,7 +4,7 @@ import androidx.room.Database
 
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import by.hometraining.pokemonlib.converter.TypeConverter
+import by.hometraining.pokemonlib.database.converter.TypeConverter
 import by.hometraining.pokemonlib.model.PokemonEntity
 
 @Database(entities = [PokemonEntity::class], version = 1)

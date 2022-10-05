@@ -1,7 +1,7 @@
 package by.hometraining.pokemonlib.model
 
 import androidx.room.*
-import by.hometraining.pokemonlib.converter.TypeConverter
+import by.hometraining.pokemonlib.database.converter.TypeConverter
 
 @Entity
 internal data class PokemonEntity(
