@@ -1,10 +1,11 @@
 package by.hometraining.pokemonlib.mapper
 
+import by.hometraining.pokemonlib.model.Pokemon
 import by.hometraining.pokemonlib.model.PokemonDetails
 import by.hometraining.pokemonlib.model.PokemonDetailsDTO
 import by.hometraining.pokemonlib.model.PokemonEntity
 
-internal fun PokemonDetailsDTO.toDomainModel(): PokemonDetails {
+internal fun PokemonDetailsDTO.toDomainDetailsModel(): PokemonDetails {
     return PokemonDetails(
         id = id,
         name = name,
@@ -15,7 +16,7 @@ internal fun PokemonDetailsDTO.toDomainModel(): PokemonDetails {
     )
 }
 
-internal fun PokemonEntity.toDomainModel(): PokemonDetails {
+internal fun PokemonEntity.toDomainDetailsModel(): PokemonDetails {
     return PokemonDetails(
         id = id,
         name = name,
@@ -34,5 +35,11 @@ internal fun PokemonDetails.toPokemonEntity(): PokemonEntity {
         weight = weight,
         height = height,
         imageURL = imageURL
+    )
+}
+
+internal fun PokemonEntity.toDomainListModel(): Pokemon {
+    return Pokemon(
+        name = name
     )
 }

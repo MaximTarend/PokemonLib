@@ -1,10 +1,10 @@
 package by.hometraining.pokemonlib.usecase
 
 import by.hometraining.pokemonlib.model.PokemonDetails
-import by.hometraining.pokemonlib.repository.PokemonRemoteRepository
+import by.hometraining.pokemonlib.repository.PokemonRepository
 
-class GetPokemonDetailsUseCase(private val pokemonRemoteRepository: PokemonRemoteRepository ) {
-    suspend operator fun invoke(name: String): Result<PokemonDetails> {
-        return pokemonRemoteRepository.getPokemonDetails(name)
+class GetPokemonDetailsUseCase(private val pokemonRepository: PokemonRepository) {
+    suspend operator fun invoke(name: String): PokemonDetails {
+        return pokemonRepository.getPokemonDetails(name)
     }
 }

@@ -4,7 +4,7 @@ import androidx.room.*
 import by.hometraining.pokemonlib.database.converter.TypeConverter
 
 @Entity
-internal data class PokemonEntity(
+data class PokemonEntity(
     @PrimaryKey
     val id: Int,
     val name: String,

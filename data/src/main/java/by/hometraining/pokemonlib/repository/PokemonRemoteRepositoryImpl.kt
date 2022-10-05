@@ -1,7 +1,7 @@
 package by.hometraining.pokemonlib.repository
 
 import by.hometraining.pokemonlib.api.PokemonApi
-import by.hometraining.pokemonlib.mapper.toDomainModel
+import by.hometraining.pokemonlib.mapper.toDomainDetailsModel
 import by.hometraining.pokemonlib.model.Pokemon
 import by.hometraining.pokemonlib.model.PokemonDetails
 
@@ -15,7 +15,7 @@ class PokemonRemoteRepositoryImpl(
     }
     override suspend fun getPokemonDetails(name: String): Result<PokemonDetails> {
         return runCatching {
-            pokemonApi.getPokemonDetails(name).toDomainModel()
+            pokemonApi.getPokemonDetails(name).toDomainDetailsModel()
         }
     }
 }

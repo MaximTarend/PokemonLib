@@ -1,6 +1,8 @@
 package by.hometraining.pokemonlib.koin
 
 import by.hometraining.pokemonlib.repository.PokemonRemoteRepository
+import by.hometraining.pokemonlib.repository.PokemonRepository
+import by.hometraining.pokemonlib.repository.PokemonRepositoryImpl
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import by.hometraining.pokemonlib.repository.PokemonRemoteRepositoryImpl
@@ -14,5 +16,8 @@ internal val repositoryModule = module {
     }
     singleOf(::PokemonLocalRepositoryImpl) {
         bind<PokemonLocalRepository>()
+    }
+    singleOf(::PokemonRepositoryImpl) {
+        bind<PokemonRepository>()
     }
 }
