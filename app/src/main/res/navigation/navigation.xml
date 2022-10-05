@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/pokemon_list"
-        android:name="by.hometraining.pokemonlib.fragments.PokemonListFragment"
+        android:name="by.hometraining.pokemonlib.presentation.listScreen.PokemonListFragment"
         tools:layout="@layout/fragment_pokemon_list">
 
         <action
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/pokemon_details"
-        android:name="by.hometraining.pokemonlib.fragments.PokemonDetailsFragment"
+        android:name="by.hometraining.pokemonlib.presentation.detailsScreen.PokemonDetailsFragment"
         tools:layout="@layout/fragment_pokemon_details">
 
         <argument

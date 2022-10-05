@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
-        android:name="by.hometraining.pokemonlib.PokemonLib"
+        android:name="by.hometraining.pokemonlib.presentation.PokemonLib"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,7 +19,7 @@
         android:theme="@style/Theme.PokemonLib"
         tools:targetApi="31">
         <activity
-            android:name="by.hometraining.pokemonlib.MainActivity"
+            android:name="by.hometraining.pokemonlib.presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
