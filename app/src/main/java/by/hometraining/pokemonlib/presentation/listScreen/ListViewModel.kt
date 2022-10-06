@@ -3,10 +3,12 @@ package by.hometraining.pokemonlib.presentation.listScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.hometraining.pokemonlib.domain.usecase.GetAllPokemonsUseCase
+import by.hometraining.pokemonlib.domain.usecase.SaveAllPokemonsUseCase
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 
 class ListViewModel(
+    private val saveAllPokemonsUseCase: SaveAllPokemonsUseCase,
     private val getAllPokemonsUseCase: GetAllPokemonsUseCase
 ) : ViewModel() {
 
@@ -20,42 +22,16 @@ class ListViewModel(
 
     val loadDataFlow = loadFlow
         .map { getAllPokemonsUseCase(offset, LIMIT) }
-        .onEach { offset += OFFSET }
+        .onEach {
+            saveAllPokemonsUseCase(it)
+            offset += OFFSET
+        }
         .runningReduce { accumulator, value -> accumulator + value }
         .shareIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
             replay = 1
         )
-
-/*    val loadDataFlow = loadFlow
-        .map {
-            getPokemonsUseCase(offset, LIMIT)
-                .fold(
-                    onSuccess = { it },
-                    onFailure = { emptyList() }
-                )
-        }
-        .onEach {
-            val listToDB = mutableListOf<PokemonDetails>()
-            it.onEach { pokemon ->
-                getPokemonDetailsUseCase(pokemon.name)
-                    .getOrNull()?.let { pokemonDetails -> listToDB.add(pokemonDetails) }
-            }
-            insertPokemonsToBD(listToDB)
-            offset += OFFSET
-        }
-        .runningReduce { accumulator, value -> accumulator + value }
-        .onStart {
-            emit(getPokemonsFromDB().map { pokemonDetails ->
-                pokemonDetails.toPokemonModel()
-            })
-        }
-        .shareIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            replay = 1
-        )*/
 
     init {
         onLoadMore()

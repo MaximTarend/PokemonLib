@@ -8,4 +8,6 @@ interface PokemonRepository {
     suspend fun getAllPokemons(offset: Int, limit: Int) : List<Pokemon>
 
     suspend fun getPokemonDetails(name: String) : PokemonDetails
+
+    suspend fun saveAllPokemons(list: List<Pokemon>) : Boolean
 }

@@ -2,6 +2,7 @@ package by.hometraining.pokemonlib.data.repository
 
 import by.hometraining.pokemonlib.data.api.PokemonApi
 import by.hometraining.pokemonlib.data.database.PokemonDao
+import by.hometraining.pokemonlib.data.model.PokemonEntity
 import by.hometraining.pokemonlib.data.model.mapper.toDomainDetailsModel
 import by.hometraining.pokemonlib.data.model.mapper.toDomainListModel
 import by.hometraining.pokemonlib.data.model.mapper.toPokemonEntity
@@ -14,14 +15,10 @@ class PokemonRepositoryImpl(
     private val pokemonApi: PokemonApi
 ) : PokemonRepository {
     override suspend fun getAllPokemons(offset: Int, limit: Int): List<Pokemon> {
-        val pokemonList = getPokemonsFromRemoteStorage(offset, limit).fold(
+        return getPokemonsFromRemoteStorage(offset, limit).fold(
             onFailure = { getPokemonsFromLocalStorage() },
-            onSuccess = {
-                saveAllPokemons(it)
-                it
-            }
+            onSuccess = { it }
         )
-        return pokemonList
     }
 
     override suspend fun getPokemonDetails(name: String): PokemonDetails {
@@ -31,24 +28,19 @@ class PokemonRepositoryImpl(
         )
     }
 
-    private suspend fun saveAllPokemons(pokemonList: List<Pokemon>) {
-        val detailsPokemonList = pokemonList.map {
-            getPokemonDetailsFromRemoteStorage(it.name).getOrDefault(
-                PokemonDetails(
-                    id = 0,
-                    name = "",
-                    types = emptyList(),
-                    weight = 0,
-                    height = 0,
-                    imageURL = ""
-                )
-            ).toPokemonEntity()
+    override suspend fun saveAllPokemons(list: List<Pokemon>): Boolean {
+        val pokemonEntityList = mutableListOf<PokemonEntity>()
+        list.map { pokemon ->
+            getPokemonDetailsFromRemoteStorage(pokemon.name)
+                .onSuccess {
+                    pokemonEntityList.add(it.toPokemonEntity())
+                }
+                .onFailure {
+                    return false
+                }
         }
-        pokemonDao.insertPokemons(detailsPokemonList)
-    }
-
-    private suspend fun getPokemonsFromLocalStorage(): List<Pokemon> {
-        return pokemonDao.getPokemons().map { it.toDomainListModel() }
+        pokemonDao.insertPokemons(pokemonEntityList.toList())
+        return true
     }
 
     private suspend fun getPokemonsFromRemoteStorage(
@@ -60,6 +52,10 @@ class PokemonRepositoryImpl(
 
     private suspend fun getPokemonDetailsFromRemoteStorage(name: String): Result<PokemonDetails> {
         return runCatching { pokemonApi.getPokemonDetails(name).toDomainDetailsModel() }
+    }
+
+    private suspend fun getPokemonsFromLocalStorage(): List<Pokemon> {
+        return pokemonDao.getPokemons().map { it.toDomainListModel() }
     }
 
     private suspend fun getPokemonDetailsFromLocalStorage(name: String): PokemonDetails {
