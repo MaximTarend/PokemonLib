@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.hometraining.pokemonlib.addPaginationScrollListener
 import by.hometraining.pokemonlib.addSpaceDecoration
+import by.hometraining.pokemonlib.domain.model.Pokemon
 import by.hometraining.pokemonlib.presentation.listScreen.listAdapter.PokemonListAdapter
 import by.hometraining.pokemonlib.presentation.model.ListItem
 import by.hometraining.pokemonlib.presentation.model.toListItem
@@ -45,20 +47,32 @@ class PokemonListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var isLoading = false
         val layoutManager = LinearLayoutManager(view.context)
 
         with(binding) {
             recyclerView.adapter = adapter
             recyclerView.layoutManager = layoutManager
+            progressCircular.isVisible = true
+            recyclerView.isVisible = false
             recyclerView.addSpaceDecoration(SPACE)
             recyclerView.addPaginationScrollListener(layoutManager, ITEMS_TO_LOAD) {
+                isLoading = true
                 listViewModel.onLoadMore()
             }
 
             listViewModel
                 .loadDataFlow
                 .onEach { list ->
-                    adapter.submitList(list.map { it.toListItem() } + ListItem.Loading)
+                    progressCircular.isVisible = false
+                    recyclerView.isVisible = true
+                    adapter.submitList(
+                        if (isLoading) {
+                            list.map { it.toListItem() } + ListItem.Loading
+                        } else {
+                            list.map { it.toListItem() }
+                        })
+                    isLoading = false
                 }
                 .launchIn(viewLifecycleOwner.lifecycleScope)
         }

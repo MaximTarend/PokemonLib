@@ -2,6 +2,7 @@ package by.hometraining.pokemonlib.presentation.listScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import by.hometraining.pokemonlib.domain.model.Pokemon
 import by.hometraining.pokemonlib.domain.usecase.GetAllPokemonsUseCase
 import by.hometraining.pokemonlib.domain.usecase.SaveAllPokemonsUseCase
 import kotlinx.coroutines.channels.BufferOverflow
