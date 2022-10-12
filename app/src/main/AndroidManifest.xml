@@ -3,10 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="by.hometraining.pokemonlib">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
     <application
         android:name="by.hometraining.pokemonlib.presentation.PokemonLib"
         android:allowBackup="true"

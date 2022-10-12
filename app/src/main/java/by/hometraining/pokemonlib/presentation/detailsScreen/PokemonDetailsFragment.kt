@@ -44,10 +44,14 @@ class PokemonDetailsFragment : Fragment() {
 
         with(binding) {
             detailsToolbar.setupWithNavController(findNavController())
+            contentGroup.isVisible = false
+            progressCircular.isVisible = true
+            showPokemonDetails()
+        }
+    }
 
-            contentLayout.isVisible = true
-            progressCircular.isVisible = false
-
+    private fun showPokemonDetails() {
+        with(binding) {
             detailsViewModel
                 .loadDetailsFlow
                 .onEach { pokemonDetails ->
@@ -59,37 +63,14 @@ class PokemonDetailsFragment : Fragment() {
                         "$HEIGHT_PREFIX ${pokemonDetails.height * HEIGHT_K} $HEIGHT_POSTFIX"
                     types.text =
                         "$TYPE_PREFIX ${pokemonDetails.types.joinToString(SEPARATOR)}"
+                    contentGroup.isVisible = true
+                    progressCircular.isVisible = false
                 }.launchIn(viewLifecycleOwner.lifecycleScope)
-
-/*            detailsViewModel
-                .loadDetailsFlow
-                .onEach { pokemonDetailsState ->
-                    contentLayout.isVisible = pokemonDetailsState is LceState.Content
-                    progressCircular.isVisible = pokemonDetailsState == LceState.Loading
-                    when (pokemonDetailsState) {
-                        is LceState.Content<PokemonDetails> -> {
-                            val pokemonDetails = pokemonDetailsState.data
-                            pokemonName.text = pokemonDetails.name
-                            image.load(pokemonDetails.imageURL)
-                            weight.text =
-                                "$WEIGHT_PREFIX ${pokemonDetails.weight * WEIGHT_K} $WEIGHT_POSTFIX"
-                            height.text =
-                                "$HEIGHT_PREFIX ${pokemonDetails.height * HEIGHT_K} $HEIGHT_POSTFIX"
-                            types.text =
-                                "$TYPE_PREFIX ${pokemonDetails.types.joinToString(SEPARATOR)}"
-                        }
-                        is LceState.Error -> {
-                            toast(pokemonDetailsState.throwable.message ?: UPLOAD_FAILURE)
-                        }
-                        LceState.Loading -> { }
-                    }
-                }.launchIn(viewLifecycleOwner.lifecycleScope)*/
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
     }
 
     private fun toast(message: String) {

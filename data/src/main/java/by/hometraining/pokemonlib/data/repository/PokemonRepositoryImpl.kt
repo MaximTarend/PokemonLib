@@ -12,8 +12,9 @@ import by.hometraining.pokemonlib.domain.repository.PokemonRepository
 
 class PokemonRepositoryImpl(
     private val pokemonDao: PokemonDao,
-    private val pokemonApi: PokemonApi
+    private val pokemonApi: PokemonApi,
 ) : PokemonRepository {
+
     override suspend fun getAllPokemons(offset: Int, limit: Int): List<Pokemon> {
         return getPokemonsFromRemoteStorage(offset, limit).fold(
             onFailure = { getPokemonsFromLocalStorage() },
