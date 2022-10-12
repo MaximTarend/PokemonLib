@@ -51,10 +51,10 @@ class PokemonDetailsFragment : Fragment() {
     }
 
     private fun showPokemonDetails() {
-        with(binding) {
-            detailsViewModel
-                .loadDetailsFlow
-                .onEach { pokemonDetails ->
+        detailsViewModel
+            .loadDetailsFlow
+            .onEach { pokemonDetails ->
+                with(binding) {
                     pokemonName.text = pokemonDetails.name
                     image.load(pokemonDetails.imageURL)
                     weight.text =
@@ -65,17 +65,13 @@ class PokemonDetailsFragment : Fragment() {
                         "$TYPE_PREFIX ${pokemonDetails.types.joinToString(SEPARATOR)}"
                     contentGroup.isVisible = true
                     progressCircular.isVisible = false
-                }.launchIn(viewLifecycleOwner.lifecycleScope)
-        }
+                }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun toast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

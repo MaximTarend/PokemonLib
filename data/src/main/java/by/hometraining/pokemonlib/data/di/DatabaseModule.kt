@@ -12,6 +12,5 @@ internal val databaseModule = module {
             "pokemon_database.db"
         ).build()
     }
-
     single { get<PokemonDatabase>().pokemonDao() }
 }

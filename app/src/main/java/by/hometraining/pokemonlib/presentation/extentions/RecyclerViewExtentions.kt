@@ -1,4 +1,4 @@
-package by.hometraining.pokemonlib
+package by.hometraining.pokemonlib.presentation.extentions
 
 import android.graphics.Rect
 import android.view.View

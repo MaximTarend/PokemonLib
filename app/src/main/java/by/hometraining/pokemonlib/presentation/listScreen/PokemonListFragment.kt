@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import by.hometraining.pokemonlib.addPaginationScrollListener
-import by.hometraining.pokemonlib.addSpaceDecoration
+import by.hometraining.pokemonlib.presentation.extentions.addPaginationScrollListener
+import by.hometraining.pokemonlib.presentation.extentions.addSpaceDecoration
 import by.hometraining.pokemonlib.presentation.listScreen.listAdapter.PokemonListAdapter
 import by.hometraining.pokemonlib.presentation.model.ListItem
 import by.hometraining.pokemonlib.presentation.model.toListItem
@@ -62,10 +62,10 @@ class PokemonListFragment : Fragment() {
     }
 
     private fun showPokemonList() {
-        with(binding) {
-            listViewModel
-                .loadDataFlow
-                .onEach { list ->
+        listViewModel
+            .loadDataFlow
+            .onEach { list ->
+                with(binding) {
                     progressCircular.isVisible = false
                     recyclerView.isVisible = true
                     if (list.size != SIZE) {
@@ -74,9 +74,10 @@ class PokemonListFragment : Fragment() {
                         adapter.submitList(list.map { it.toListItem() })
                     }
                 }
-                .launchIn(viewLifecycleOwner.lifecycleScope)
-        }
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

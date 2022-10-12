@@ -11,7 +11,6 @@ class ItemViewHolder(
 
     fun bind(item: ListItem.Pokemon) {
         binding.pokemonName.text = item.name
-
         binding.root.setOnClickListener {
             onClicked(item)
         }
