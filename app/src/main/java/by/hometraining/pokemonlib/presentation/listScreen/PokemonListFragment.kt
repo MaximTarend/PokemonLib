@@ -80,6 +80,7 @@ class PokemonListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
     }
 
     private fun toast(message: String) {
